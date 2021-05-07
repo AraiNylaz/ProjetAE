@@ -8,6 +8,7 @@ import be.vinci.pae.services.furniture.DAOFurniture;
 import be.vinci.pae.services.picture.DAOPicture;
 import be.vinci.pae.utils.BusinessException;
 import be.vinci.pae.utils.Upload;
+import be.vinci.pae.utils.UploadInterface;
 import jakarta.inject.Inject;
 
 public class PictureUCCImpl implements PictureUCC {
@@ -20,6 +21,9 @@ public class PictureUCCImpl implements PictureUCC {
 
   @Inject
   private DAOPicture daoPicture;
+  
+  @Inject
+  private UploadInterface upload;
 
   @Override
   public List<PictureDTO> getCarouselPictures() {
@@ -67,7 +71,7 @@ public class PictureUCCImpl implements PictureUCC {
         return null;
       } else {
         String uploadedFileLocation = ".\\images\\" + id + "." + pictureType;
-        if (Upload.saveToFile(uploadedInputStream, uploadedFileLocation)) {
+        if (upload.saveToFile(uploadedInputStream, uploadedFileLocation)) {
           this.dalServices.commitTransaction();
           newPicture.setId(id);
           return newPicture;
@@ -90,7 +94,7 @@ public class PictureUCCImpl implements PictureUCC {
       try {
         this.dalServices.startTransaction();
         boolean b1 = this.daoPicture.deletePicture(pictureId);
-        /* boolean b2 = */ Upload.deleteFile(uploadedFileLocation);
+        /* boolean b2 = */ upload.deleteFile(uploadedFileLocation);
         // TODO deletefile on disk
         if (!b1 /* || !b2 */) {
           this.dalServices.rollbackTransaction();

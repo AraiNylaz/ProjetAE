@@ -92,5 +92,8 @@ public class ApplicationBinder extends AbstractBinder {
     // DALSERVICES
     bind(DalServicesImpl.class).to(DalServices.class).to(DalBackendServices.class)
         .in(Singleton.class);
+    
+    //UPLOAD
+    bind(Upload.class).to(UploadInterface.class).in(Singleton.class);
   }
 }

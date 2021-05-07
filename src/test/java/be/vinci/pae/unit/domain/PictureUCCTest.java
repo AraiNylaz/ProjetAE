@@ -31,6 +31,8 @@ import be.vinci.pae.services.furniture.DAOFurniture;
 import be.vinci.pae.services.picture.DAOPicture;
 import be.vinci.pae.utils.BusinessException;
 import be.vinci.pae.utils.Upload;
+import be.vinci.pae.utils.UploadInterface;
+import jakarta.inject.Inject;
 
 public class PictureUCCTest {
 
@@ -45,6 +47,8 @@ public class PictureUCCTest {
   DAOPicture daoPicture;
   @Mock
   DAOFurniture daoFurniture;
+  @Mock
+  private UploadInterface upload;
 
   @InjectMocks
   PictureUCCImpl pictureUCC;
@@ -97,25 +101,27 @@ public class PictureUCCTest {
   @DisplayName("test addPicture")
   @Test
   public void addPictureTest() throws FileNotFoundException {
+
+    PictureDTO picture = pictureFactory.getPicture();
+    assertThrows(BusinessException.class, () -> pictureUCC.addPicture(-1, picture, null, null));
     FurnitureDTO furniture = furnitureFactory.getFurniture();
     Mockito.when(daoFurniture.selectFurnitureById(1)).thenReturn(furniture);
-    PictureDTO picture = pictureFactory.getPicture();
-    assertThrows(BusinessException.class, () -> pictureUCC.addPicture(2, picture, null, null));
-    // InputStream input = new FileInputStream("C:\\Users\\user\\Desktop\\deuil.jpg");
-    // assertNull(pictureUCC.addPicture(1, picture, input, ".jpg"));
+    InputStream input = new FileInputStream("C:\\Users\\user\\Desktop\\deuil.jpg");
+    assertNull(pictureUCC.addPicture(1, picture, input, ".jpg"));
     Mockito.when(daoPicture.addPicture(picture)).thenReturn(1);
+    Mockito.when(upload.saveToFile(null, null)).thenReturn(true);
     // TODO upload --> link
     // gerer les inputStreams !!!
-    // assertEquals(picture, pictureUCC.addPicture(1, picture, null, null));
+    assertEquals(picture, pictureUCC.addPicture(1, picture, null, null));
   }
 
   @DisplayName("test modifyScrollingPicture")
   @Test
   public void modifyScrollingPictureTest() {
-    Mockito.when(daoPicture.updateScrollingPicture(1)).thenReturn(true);
-    assertTrue(pictureUCC.modifyScrollingPicture(1));
     Mockito.when(daoPicture.updateScrollingPicture(1)).thenReturn(false);
     assertThrows(BusinessException.class, () -> pictureUCC.modifyScrollingPicture(1));
+    Mockito.when(daoPicture.updateScrollingPicture(1)).thenReturn(true);
+    assertTrue(pictureUCC.modifyScrollingPicture(1));
   }
 
   @DisplayName("test deletePicture")
@@ -131,27 +137,22 @@ public class PictureUCCTest {
     furniture.setId(1);
     picture.setFurniture(furniture);
     furniture.setFavouritePicture(1);
-    assertFalse(pictureUCC.deletePicture(1));
-
     Mockito.when(daoPicture.deletePicture(1)).thenReturn(false);
     assertFalse(pictureUCC.deletePicture(1));
-
     Mockito.when(daoPicture.deletePicture(1)).thenReturn(true);
-    // Boolean boleen = Upload.deleteFile("test");
-    // debug
-    // System.out.println(boleen);
+    Mockito.when(upload.deleteFile("test.jpg")).thenReturn(false);
     assertFalse(pictureUCC.deletePicture(1));
-    Mockito.when(daoPicture.deletePicture(1)).thenReturn(true);
-    // assertTrue(pictureUCC.deletePicture(1));
+    Mockito.when(upload.deleteFile("test.jpg")).thenReturn(true);
+    assertTrue(pictureUCC.deletePicture(1));
   }
 
   @DisplayName("test modifyVisibleForEveryone")
   @Test
   public void modifyVisibleForEveryoneTest() {
-    Mockito.when(daoPicture.updateVisibleForEveryone(1)).thenReturn(true);
-    assertTrue(pictureUCC.modifyVisibleForEveryone(1));
     Mockito.when(daoPicture.updateVisibleForEveryone(1)).thenReturn(false);
     assertThrows(BusinessException.class, () -> pictureUCC.modifyVisibleForEveryone(1));
+    Mockito.when(daoPicture.updateVisibleForEveryone(1)).thenReturn(true);
+    assertTrue(pictureUCC.modifyVisibleForEveryone(1));
   }
 
 }
