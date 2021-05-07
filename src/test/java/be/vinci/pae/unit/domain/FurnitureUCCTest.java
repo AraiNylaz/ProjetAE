@@ -184,6 +184,7 @@ public class FurnitureUCCTest {
     Mockito.when(daoFurniture.updateCondition(1, condition.ordinal())).thenReturn(true);
     assertTrue(furnitureUCC.modifyCondition(1, condition));
     condition = ValueLink.FurnitureCondition.vendu;
+    //TODO doit être true but is false
     UserDTO buyer = userFactory.getUser();
     buyer.setUserType(ValueLink.UserType.antiquaire);
     furniture.setBuyer(buyer);
