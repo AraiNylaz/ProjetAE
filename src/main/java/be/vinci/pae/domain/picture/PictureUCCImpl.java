@@ -93,10 +93,10 @@ public class PictureUCCImpl implements PictureUCC {
     if (pictureDTO.getFurniture().getFavouritePicture() != pictureId) {
       try {
         this.dalServices.startTransaction();
-        boolean b1 = this.daoPicture.deletePicture(pictureId);
-        /* boolean b2 = */ upload.deleteFile(uploadedFileLocation);
+       // boolean b1 = this.daoPicture.deletePicture(pictureId);
+        /* boolean b2 = */ //upload.deleteFile(uploadedFileLocation);
         // TODO deletefile on disk
-        if (!b1 /* || !b2 */) {
+        if (!this.daoPicture.deletePicture(pictureId) /* || !b2 */) {
           this.dalServices.rollbackTransaction();
           throw new BusinessException("Error delete picture");
         }

@@ -32,6 +32,5 @@ public class ApplicationBinder extends AbstractBinder {
     bind(VisitRequestFactoryImpl.class).to(VisitRequestFactory.class).in(Singleton.class);
     bind(PictureFactoryImpl.class).to(PictureFactory.class).in(Singleton.class);
     bind(AddressFactoryImpl.class).to(AddressFactory.class).in(Singleton.class);
-    bind(Upload.class).to(UploadInterface.class).in(Singleton.class);
   }
 }

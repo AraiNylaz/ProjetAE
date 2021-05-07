@@ -161,7 +161,7 @@ public class OptionUCCTest {
     Mockito.when(daoOption.addOption(optionToAdd)).thenReturn(5);
     furniture.setId(5);
     
-    //why is it null !!!! ????
+    //why is it null !!!??? see OptionUCCImlp line 71-76
     assertThrows(NullPointerException.class, () -> optionUCC.addOption(5, 2, buyer3));
     /*
     List<OptionDTO> list2 = new ArrayList<OptionDTO>();
