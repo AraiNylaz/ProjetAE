@@ -15,6 +15,8 @@ import be.vinci.pae.domain.user.UserFactory;
 import be.vinci.pae.domain.user.UserFactoryImpl;
 import be.vinci.pae.domain.visitrequest.VisitRequestFactory;
 import be.vinci.pae.domain.visitrequest.VisitRequestFactoryImpl;
+import be.vinci.pae.utils.Upload;
+import be.vinci.pae.utils.UploadInterface;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.ext.Provider;
 
@@ -30,6 +32,6 @@ public class ApplicationBinder extends AbstractBinder {
     bind(VisitRequestFactoryImpl.class).to(VisitRequestFactory.class).in(Singleton.class);
     bind(PictureFactoryImpl.class).to(PictureFactory.class).in(Singleton.class);
     bind(AddressFactoryImpl.class).to(AddressFactory.class).in(Singleton.class);
-
+    bind(Upload.class).to(UploadInterface.class).in(Singleton.class);
   }
 }
