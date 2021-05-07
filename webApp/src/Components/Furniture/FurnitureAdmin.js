@@ -374,8 +374,8 @@ const onSale = () => {
   let price = document.querySelector("#prix");
   price.innerHTML = `<input class="form-control" id="inputSellingPrice" type="number" value=${furniture.sellingPrice} />`;
 
-  let specialSalePrice = document.querySelector("#specialSalePrice");
-  specialSalePrice.innerHTML = `<input class="form-control" id="inputSpecialSalePrice" type="number" value=${furniture.specialSalePrice} />`;
+  /*let specialSalePrice = document.querySelector("#specialSalePrice");
+  specialSalePrice.innerHTML = `<input class="form-control" id="inputSpecialSalePrice" type="number" value=${furniture.specialSalePrice} />`;*/
 }
 
 const onPurchase = () => {
@@ -407,6 +407,8 @@ const onSold = () => {
   }
   else
     withdrawalDateToCustomer.innerHTML = `<input class="form-control" id="inputWithdrawalDateToCustomer" type="date"/>`;
+  let specialSalePrice = document.querySelector("#specialSalePrice");
+  specialSalePrice.innerHTML = `<input class="form-control" id="inputSpecialSalePrice" type="number" value=${furniture.specialSalePrice} />`;
 }
 
 const onBuyerEmail = () => {
@@ -458,10 +460,7 @@ const onSave = async() => {
         sellingPrice = document.querySelector("#inputSellingPrice").value;
         furniture.sellingPrice = sellingPrice;
       }
-      if(furniture.specialSalePrice != document.querySelector("#inputSpecialSalePrice").value){
-        specialSalePrice = document.querySelector("#inputSpecialSalePrice").value;
-        furniture.specialSalePrice = specialSalePrice;
-      }
+
       document.querySelector("#inputWithdrawalDateToCustomer").value = null;
       document.querySelector("#inputBuyerEmail").value = null;
     } else if(condition == "achete"){
@@ -481,6 +480,12 @@ const onSave = async() => {
       } else if(furniture.buyer && furniture.buyer.email){
         buyerEmail = document.querySelector("#inputBuyerEmail").value;
         furniture.buyer.email = buyerEmail;
+      }
+      if(condition == "vendu"){
+        if(furniture.specialSalePrice != document.querySelector("#inputSpecialSalePrice").value){
+          specialSalePrice = document.querySelector("#inputSpecialSalePrice").value;
+          furniture.specialSalePrice = specialSalePrice;
+        }
       }
     }
     let checkConditions = true;
@@ -776,23 +781,28 @@ const onCheckConditions = () =>{
     case "achete":
       ensemble += achete;
       ensemble += emporte_par_patron;
+      ensemble += vendu;
       ensemble += propose;
+      
       break;
     case "emporte_par_patron":
       ensemble += emporte_par_patron;
       ensemble += en_restauration;
       ensemble += en_magasin;
+      ensemble += vendu;
       ensemble += achete;
       break;
     case "en_restauration":
       ensemble += en_restauration;
       ensemble += en_magasin;
+      ensemble += vendu;
       ensemble += emporte_par_patron;
       break;
     case "en_magasin":
       ensemble += en_magasin;
       ensemble += en_vente;
       ensemble += emporte_par_patron;
+      ensemble += vendu;
       ensemble += en_restauration;
       break;
     case "en_vente":
@@ -804,6 +814,7 @@ const onCheckConditions = () =>{
     case "retire_de_vente":
       ensemble += retire_de_vente;
       ensemble += en_vente;
+      ensemble += vendu;
       break;
     case "en_option":
       ensemble += en_option;
@@ -817,6 +828,11 @@ const onCheckConditions = () =>{
       ensemble += livre;
       ensemble += en_vente;
       ensemble += en_option;
+      ensemble += achete;
+      ensemble += emporte_par_patron;
+      ensemble += en_magasin;
+      ensemble += en_restauration;
+      ensemble += retire_de_vente;
       break;
     case "reserve":
       ensemble += reserve;

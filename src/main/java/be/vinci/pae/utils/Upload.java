@@ -44,6 +44,7 @@ public class Upload implements UploadInterface{
    */
   public boolean deleteFile(String fileLocation) {
     File file = new File(fileLocation);
+    
     return file.delete();
   }
 

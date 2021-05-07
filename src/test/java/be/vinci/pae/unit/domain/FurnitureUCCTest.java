@@ -150,8 +150,7 @@ public class FurnitureUCCTest {
         () -> furnitureUCC.modifyCondition(2, ValueLink.FurnitureCondition.ne_convient_pas));
     assertThrows(NullPointerException.class, () -> furnitureUCC.modifyCondition(1, null));
 
-    FurnitureCondition condition = null;
-    condition = ValueLink.FurnitureCondition.propose;
+    FurnitureCondition condition = ValueLink.FurnitureCondition.propose;
     Mockito.when(daoFurniture.updateCondition(1, condition.ordinal())).thenReturn(true);
     assertTrue(furnitureUCC.modifyCondition(1, condition));
     condition = ValueLink.FurnitureCondition.ne_convient_pas;
@@ -185,6 +184,10 @@ public class FurnitureUCCTest {
     Mockito.when(daoFurniture.updateCondition(1, condition.ordinal())).thenReturn(true);
     assertTrue(furnitureUCC.modifyCondition(1, condition));
     condition = ValueLink.FurnitureCondition.vendu;
+    UserDTO buyer = userFactory.getUser();
+    buyer.setUserType(ValueLink.UserType.antiquaire);
+    furniture.setBuyer(buyer);
+    Mockito.when(daoOption.selectOptionByFurnitureId(1)).thenReturn(option);
     Mockito.when(daoOption.finishOption(1)).thenReturn(true);
     Mockito.when(daoFurniture.updateCondition(1, condition.ordinal())).thenReturn(true);
     assertTrue(furnitureUCC.modifyCondition(1, condition));
@@ -340,6 +343,7 @@ public class FurnitureUCCTest {
   public void modifyFurnitureTest() {
     FurnitureCondition condition = null;
     condition = null;
+    
 
     FurnitureDTO furnitureToAdd = furnitureFactory.getFurniture();
     Mockito.when(daoFurniture.selectFurnitureById(1)).thenReturn(furnitureToAdd);
@@ -350,6 +354,9 @@ public class FurnitureUCCTest {
     assertTrue(furnitureUCC.modifyFurniture(1, condition, 200.00, -1, -1, -1, null, null, null,
         null, null));
 
+    UserDTO buyer = userFactory.getUser();
+    buyer.setUserType(ValueLink.UserType.antiquaire);
+    furnitureToAdd.setBuyer(buyer);
     Mockito.when(daoFurniture.updateSpecialSalePrice(1, 180.000)).thenReturn(true);
     assertTrue(furnitureUCC.modifyFurniture(1, condition, -1, 180.00, -1, -1, null, null, null,
         null, null));
