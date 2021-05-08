@@ -414,8 +414,8 @@ public class FurnitureUCCImpl implements FurnitureUCC {
     if (condition != null) {
       if (condition == FurnitureCondition.achete
           && (furnitureDTO.getPurchasePrice() == 0 && purchasePrice == -1
-              || (withdrawalDateFromCustomer == null
-                  && furnitureDTO.getWithdrawalDateFromCustomer() == null))) {
+              || withdrawalDateFromCustomer == null
+                  && furnitureDTO.getWithdrawalDateFromCustomer() == null)) {
         throw new BusinessException("Veuillez remplir les champs.");
       }
       if (condition == FurnitureCondition.vendu

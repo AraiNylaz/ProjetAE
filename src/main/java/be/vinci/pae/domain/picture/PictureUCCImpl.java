@@ -87,7 +87,8 @@ public class PictureUCCImpl implements PictureUCC {
   @Override
   public boolean deletePicture(int pictureId) {
     PictureDTO pictureDTO = this.daoPicture.selectPictureById(pictureId);
-    // String pictureType = pictureDTO.getName().substring(pictureDTO.getName().lastIndexOf('.') + 1);
+    // String pictureType = pictureDTO.getName().substring(pictureDTO.getName()
+    // .lastIndexOf('.') + 1);
     // String uploadedFileLocation = ".\\images\\" + pictureId + "." + pictureType;
     if (pictureDTO.getFurniture().getFavouritePicture() != pictureId) {
       try {
