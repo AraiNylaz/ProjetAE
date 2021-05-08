@@ -123,6 +123,7 @@ public class PictureUCCTest {
     assertTrue(pictureUCC.modifyScrollingPicture(1));
   }
 
+  //pas besoin de tester avec upload
   @DisplayName("test deletePicture")
   @Test
   public void deletePictureTest() {
@@ -135,17 +136,18 @@ public class PictureUCCTest {
     picture.setFurniture(furniture);
     furniture.setFavouritePicture(1);
     assertFalse(pictureUCC.deletePicture(1));
-    
+    //TODO
     Mockito.when(daoPicture.deletePicture(1)).thenReturn(false);
-    assertThrows(BusinessException.class, () -> pictureUCC.deletePicture(1));
-    //assertFalse(pictureUCC.deletePicture(1));
+    //assertThrows(BusinessException.class, () -> pictureUCC.deletePicture(1));
+    assertFalse(pictureUCC.deletePicture(1));
     //Mockito.when(daoPicture.deletePicture(1)).thenReturn(true);
-   // String uploadedFileLocation = ".\\images\\1.jpg";
-   //Mockito.when(upload.deleteFile(uploadedFileLocation)).thenReturn(false);
+    // String uploadedFileLocation = ".\\images\\1.jpg";
+    //Mockito.when(upload.deleteFile(uploadedFileLocation)).thenReturn(false);
     //assertFalse(pictureUCC.deletePicture(1));
     Mockito.when(daoPicture.deletePicture(1)).thenReturn(true);
     //Mockito.when(upload.deleteFile(uploadedFileLocation)).thenReturn(true);
-    assertTrue(pictureUCC.deletePicture(1));
+    assertFalse(pictureUCC.deletePicture(1));
+    //assertTrue(pictureUCC.deletePicture(1));
     
   }
 
