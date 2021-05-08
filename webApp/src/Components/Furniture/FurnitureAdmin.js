@@ -249,11 +249,11 @@ const onPicturesList = (picturesList) => {
     picturesList.forEach(picture => {
       if(counter == 0){
         carousel += `<div class="carousel-item active"> 
-        <img id="carouselFurnitureAdmin" src="${IMAGES}${picture.id}.${picture.name.substring(picture.name.lastIndexOf('.')+1)}" class="d-block w-100" alt="${counter}">
+        <img id="carouselFurnitureAdmin" src="${IMAGES}${picture.name}" class="d-block w-100" alt="${counter}">
         </div>`;
       }else{
         carousel += `<div class="carousel-item"> 
-        <img id="carouselFurnitureAdmin" src="${IMAGES}${picture.id}.${picture.name.substring(picture.name.lastIndexOf('.')+1)}" class="d-block w-100" alt="${counter}">
+        <img id="carouselFurnitureAdmin" src="${IMAGES}${picture.name}" class="d-block w-100" alt="${counter}">
         </div>`;
       }
         counter ++;
@@ -532,10 +532,10 @@ const onModifyPicture = () => {
     let btnModifyPicture = document.querySelector("#btnModifyPicture");
     let codeModifyPicture = `<div class="row"><div class="btn-group" role="group" aria-label="Basic example">`;
     let p = document.querySelector(".carousel-item.active img").src;
-    let pictureId = p.substring(p.lastIndexOf('/')+1,p.lastIndexOf('.'));
+    let pictureName = p.substring(p.lastIndexOf('/')+1);
     let picture;
     pictures.forEach(pct => {
-      if(pct.id == pictureId){
+      if(pct.name == pictureName){
         picture = pct; 
         return;
       }
@@ -616,13 +616,19 @@ const onAddScrollingPicture = async() => {
   const user = getUserSessionData();
 
   let picture = document.querySelector(".carousel-item.active img").src;
-  let pictureId = picture.substring(picture.lastIndexOf('/')+1,picture.lastIndexOf('.'));
+  let pictureName = picture.substring(picture.lastIndexOf('/')+1);
+  pictures.forEach(pct => {
+    if(pct.name == pictureName){
+      picture = pct; 
+      return;
+    }
+  });
 
   try {
-    await callAPIWithoutJSONResponse(API_BASE_URL + pictureId + "/scrolling-picture", "PUT", user.token);
+    await callAPIWithoutJSONResponse(API_BASE_URL + picture.id + "/scrolling-picture", "PUT", user.token);
     document.getElementById("toast").innerHTML = `</br><h5 style="color:green">L'attribut photo défilante de l'image a bien été modifié</h5>`;
     pictures.forEach(pct => {
-      if(pct.id == pictureId){
+      if(pct.name == pictureName){
         pct.scrollingPicture = !pct.scrollingPicture; 
         return;
       }
@@ -640,12 +646,18 @@ const onAddFavouritePicture = async() => {
   const user = getUserSessionData();
 
   let picture = document.querySelector(".carousel-item.active img").src;
-  let pictureId = picture.substring(picture.lastIndexOf('/')+1,picture.lastIndexOf('.'));
+  let pictureName = picture.substring(picture.lastIndexOf('/')+1);
+  pictures.forEach(pct => {
+    if(pct.name == pictureName){
+      picture = pct; 
+      return;
+    }
+  });
   try {
-    await callAPIWithoutJSONResponse(API_BASE_URL + pictureId + "/favourite-picture", "PUT", user.token);
+    await callAPIWithoutJSONResponse(API_BASE_URL + picture.id + "/favourite-picture", "PUT", user.token);
     document.getElementById("toast").innerHTML = `</br><h5 style="color:green">La photo a bien été désignée favorite</h5>`;
     pictures.forEach(pct => {
-      if(pct.id == pictureId){
+      if(pct.name == pictureName){
         furniture.favouritePicture = pct.id;
         return;
       }
@@ -661,13 +673,19 @@ const onVisibleForEveryone = async() => {
   const user = getUserSessionData();
 
   let picture = document.querySelector(".carousel-item.active img").src;
-  let pictureId = picture.substring(picture.lastIndexOf('/')+1,picture.lastIndexOf('.'));
+  let pictureName = picture.substring(picture.lastIndexOf('/')+1);
+  pictures.forEach(pct => {
+    if(pct.name == pictureName){
+      picture = pct; 
+      return;
+    }
+  });
 
   try {
-    await callAPIWithoutJSONResponse(API_BASE_URL + pictureId + "/visible", "PUT", user.token);
+    await callAPIWithoutJSONResponse(API_BASE_URL + picture.id + "/visible", "PUT", user.token);
     document.getElementById("toast").innerHTML = `</br><h5 style="color:green">La photo a bien été modifiée.</h5>`;
     pictures.forEach(pct => {
-      if(pct.id == pictureId){
+      if(pct.name == pictureName){
         pct.visibleForEveryone = !pct.visibleForEveryone; 
         return;
       }
@@ -686,10 +704,16 @@ const onDeletePicture = async() => {
   const user = getUserSessionData();
 
   let picture = document.querySelector(".carousel-item.active img").src;
-  let pictureId = picture.substring(picture.lastIndexOf('/')+1,picture.lastIndexOf('.'));
+  let pictureName = picture.substring(picture.lastIndexOf('/')+1);
+  pictures.forEach(pct => {
+    if(pct.name == pictureName){
+      picture = pct; 
+      return;
+    }
+  });
 
   try {
-    await callAPIWithoutJSONResponse(API_BASE_URL + pictureId + "/picture", "DELETE", user.token);
+    await callAPIWithoutJSONResponse(API_BASE_URL + picture.id + "/picture", "DELETE", user.token);
     document.getElementById("toast").innerHTML = `</br><h5 style="color:green">La photo a bien été supprimée</h5>`;
   } catch (err) {
     console.error("AdminFurniture::Delete picture", err);

@@ -46,7 +46,7 @@ const Navbar = () => {
   } else if(user) {
     navbar = `<nav class="navbar navbar-expand-lg navbar-light bg-light mb-2" id="navBar">
     <a class="navbar-brand" href="/">
-    <img src="http://localhost:8080/images/logoNavBar.png" width="85" height="85" alt="">
+    <img src="${logoNavBar}" width="85" height="85" alt="">
   </a>  <button
     class="navbar-toggler"
     type="button"
@@ -84,7 +84,7 @@ const Navbar = () => {
   } else {
     navbar = `<nav class="navbar navbar-expand-lg navbar-light bg-light mb-2" id="navBar">
     <a class="navbar-brand" href="/">
-    <img src="http://localhost:8080/images/logoNavBar.png" width="85" height="85" alt="">
+    <img src="${logoNavBar}" width="85" height="85" alt="">
   </a>  <button
     class="navbar-toggler"
     type="button"

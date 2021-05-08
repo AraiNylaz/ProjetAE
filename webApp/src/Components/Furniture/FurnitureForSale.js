@@ -135,11 +135,11 @@ const onPicturesList = (picturesList) => {
   picturesList.forEach(picture => {
     if(counter == 0){
       carousel += `<div class="carousel-item active"> 
-      <img id="carouselFurnitureAdmin" src="${IMAGES}${picture.id}.${picture.name.substring(picture.name.lastIndexOf('.')+1)}" class="d-block w-100" alt="${counter}">
+      <img id="carouselFurnitureAdmin" src="${IMAGES}${picture.name}" class="d-block w-100" alt="${counter}">
       </div>`;
     }else{
       carousel += `<div class="carousel-item"> 
-      <img id="carouselFurnitureAdmin" src="${IMAGES}${picture.id}.${picture.name.substring(picture.name.lastIndexOf('.')+1)}" class="d-block w-100" alt="${counter}">
+      <img id="carouselFurnitureAdmin" src="${IMAGES}${picture.name}" class="d-block w-100" alt="${counter}">
       </div>`;
     }
       counter ++;

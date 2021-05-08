@@ -79,8 +79,8 @@ const onPicturesList = (data) => {
     }
     carousel += `
     <div class="container d-flex justify-content-center">
-        <img id="carouselHomePageBlur" src="${IMAGES}${picture.id}.${picture.name.substring(picture.name.lastIndexOf('.')+1)}" alt="${counter}">
-        <img id="carouselHomePage" src="${IMAGES}${picture.id}.${picture.name.substring(picture.name.lastIndexOf('.')+1)}" alt="${counter}">
+        <img id="carouselHomePageBlur" src="${IMAGES}${picture.name}" alt="${counter}">
+        <img id="carouselHomePage" src="${IMAGES}${picture.name}" alt="${counter}">
         <div class="carousel-caption">
             <p class="font-weight-bold carousel-dark">${picture.furniture.description}</p>
     </div></div></div>

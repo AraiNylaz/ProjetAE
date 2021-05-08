@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import org.apache.commons.text.StringEscapeUtils;
 import be.vinci.pae.domain.address.AddressDTO;
 import be.vinci.pae.domain.furniture.FurnitureDTO;
@@ -101,14 +102,16 @@ public class VisitRequestUCCImpl implements VisitRequestUCC {
         furniture.setId(furnitureId);
         for (PictureDTO picture : furniture.getPicturesList()) {
           picture.setFurniture(furniture);
-          String pictureType = picture.getName().substring(picture.getName().lastIndexOf('.') + 1);
+          String pictureType = picture.getName().substring(picture.getName().lastIndexOf('.'));
+          picture.setName(UUID.randomUUID() + pictureType);
           int pictureId = this.daoPicture.addPicture(picture);
           if (pictureId == -1) {
             this.dalServices.rollbackTransaction();
             return null;
           } else {
-            String uploadedFileLocation = ".\\images\\" + pictureId + "." + pictureType;
+            String uploadedFileLocation = ".\\images\\" + picture.getName();
             if (!upload.saveToFile(inputStreamList.get(count), uploadedFileLocation)) {
+
               this.dalServices.rollbackTransaction();
               return null;
             } else {

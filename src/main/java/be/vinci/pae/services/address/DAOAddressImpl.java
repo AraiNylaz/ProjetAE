@@ -1,15 +1,15 @@
 package be.vinci.pae.services.address;
 
-import be.vinci.pae.domain.address.AddressDTO;
-import be.vinci.pae.domain.address.AddressFactory;
-import be.vinci.pae.services.DalBackendServices;
-import be.vinci.pae.utils.FatalException;
-import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import be.vinci.pae.domain.address.AddressDTO;
+import be.vinci.pae.domain.address.AddressFactory;
+import be.vinci.pae.services.DalBackendServices;
+import be.vinci.pae.utils.FatalException;
+import jakarta.inject.Inject;
 
 public class DAOAddressImpl implements DAOAddress {
 
@@ -43,7 +43,8 @@ public class DAOAddressImpl implements DAOAddress {
         + "building_number, postcode, commune, country, unit_number) "
         + "VALUES (DEFAULT, ?, ?, ?, ?, ?, ?)";
     queryAddAddressWithoutUnitNumber = "INSERT INTO project.addresses (address_id, street, "
-        + "building_number, postcode, commune, country) VALUES (DEFAULT, ?, ?, ?, ?, ?)";
+        + "building_number, unit_number, postcode, commune, country) VALUES"
+        + " (DEFAULT, ?, ?, NULL, ?, ?, ?)";
     querySelectAddressById = "SELECT a.address_id, a.street, a.building_number, a.unit_number, "
         + "a.postcode, a.commune, a.country FROM project.addresses a WHERE a.address_id = ?";
     querySelectAddressByUserId =
@@ -101,7 +102,7 @@ public class DAOAddressImpl implements DAOAddress {
   public int addAddress(AddressDTO addressDTO) {
     try {
       PreparedStatement addAddress;
-      if (addressDTO.getUnitNumber() != null) {
+      if (addressDTO.getUnitNumber() != null && !addressDTO.getUnitNumber().isEmpty()) {
         addAddress = this.dalBackendServices.getPreparedStatementAdd(queryAddAddressWithUnitNumber);
         addAddress.setString(6, addressDTO.getUnitNumber());
       } else {
