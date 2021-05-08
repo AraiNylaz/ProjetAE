@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class Upload implements UploadInterface{
+public class Upload implements UploadInterface {
 
   /**
    * Save uploadedInputStream to uploadedFileLocation.
@@ -44,7 +44,7 @@ public class Upload implements UploadInterface{
    */
   public boolean deleteFile(String fileLocation) {
     File file = new File(fileLocation);
-    
+
     return file.delete();
   }
 

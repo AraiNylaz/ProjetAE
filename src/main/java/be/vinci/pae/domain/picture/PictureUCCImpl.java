@@ -7,7 +7,6 @@ import be.vinci.pae.services.DalServices;
 import be.vinci.pae.services.furniture.DAOFurniture;
 import be.vinci.pae.services.picture.DAOPicture;
 import be.vinci.pae.utils.BusinessException;
-import be.vinci.pae.utils.Upload;
 import be.vinci.pae.utils.UploadInterface;
 import jakarta.inject.Inject;
 
@@ -21,7 +20,7 @@ public class PictureUCCImpl implements PictureUCC {
 
   @Inject
   private DAOPicture daoPicture;
-  
+
   @Inject
   private UploadInterface upload;
 
@@ -88,13 +87,13 @@ public class PictureUCCImpl implements PictureUCC {
   @Override
   public boolean deletePicture(int pictureId) {
     PictureDTO pictureDTO = this.daoPicture.selectPictureById(pictureId);
-    String pictureType = pictureDTO.getName().substring(pictureDTO.getName().lastIndexOf('.') + 1);
-    String uploadedFileLocation = ".\\images\\" + pictureId + "." + pictureType;
+    // String pictureType = pictureDTO.getName().substring(pictureDTO.getName().lastIndexOf('.') + 1);
+    // String uploadedFileLocation = ".\\images\\" + pictureId + "." + pictureType;
     if (pictureDTO.getFurniture().getFavouritePicture() != pictureId) {
       try {
         this.dalServices.startTransaction();
-       // boolean b1 = this.daoPicture.deletePicture(pictureId);
-        /* boolean b2 = */ //upload.deleteFile(uploadedFileLocation);
+        // boolean b1 = this.daoPicture.deletePicture(pictureId);
+        /* boolean b2 = */ // upload.deleteFile(uploadedFileLocation);
         // TODO deletefile on disk
         if (!this.daoPicture.deletePicture(pictureId) /* || !b2 */) {
           this.dalServices.rollbackTransaction();

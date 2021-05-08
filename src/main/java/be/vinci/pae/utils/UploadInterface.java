@@ -4,8 +4,8 @@ import java.io.InputStream;
 
 public interface UploadInterface {
 
-  public boolean saveToFile(InputStream uploadedInputStream, String uploadedFileLocation);
+  boolean saveToFile(InputStream uploadedInputStream, String uploadedFileLocation);
 
-  public boolean deleteFile(String fileLocation);
+  boolean deleteFile(String fileLocation);
 
 }

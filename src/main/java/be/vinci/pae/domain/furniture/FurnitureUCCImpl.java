@@ -167,13 +167,13 @@ public class FurnitureUCCImpl implements FurnitureUCC {
               || furnitureDTO.getCondition() == FurnitureCondition.livre
               || furnitureDTO.getCondition() == FurnitureCondition.reserve
               || furnitureDTO.getCondition() == FurnitureCondition.emporte_par_client
-              || ((furnitureDTO.getCondition() == FurnitureCondition.achete
+              || (furnitureDTO.getCondition() == FurnitureCondition.achete
                   || furnitureDTO.getCondition() == FurnitureCondition.emporte_par_patron
                   || furnitureDTO.getCondition() == FurnitureCondition.en_magasin
                   || furnitureDTO.getCondition() == FurnitureCondition.en_restauration
                   || furnitureDTO.getCondition() == FurnitureCondition.retire_de_vente)
                   && furnitureDTO.getBuyer() != null
-                  && furnitureDTO.getBuyer().getUserType() == UserType.antiquaire)) {
+                  && furnitureDTO.getBuyer().getUserType() == UserType.antiquaire) {
             OptionDTO optionDTO = this.daoOption.selectOptionByFurnitureId(id);
             if (optionDTO != null) {
               noError = daoOption.finishOption(optionDTO.getId())
@@ -181,7 +181,7 @@ public class FurnitureUCCImpl implements FurnitureUCC {
             } else {
               noError = daoFurniture.updateCondition(id, condition.ordinal());
             }
-          }else {
+          } else {
             noError = false;
           }
           break;
@@ -413,22 +413,22 @@ public class FurnitureUCCImpl implements FurnitureUCC {
     // Ne pas pouvoir modifier des états sans modifier certains champs.
     if (condition != null) {
       if (condition == FurnitureCondition.achete
-          && ((furnitureDTO.getPurchasePrice() == 0 && purchasePrice == -1)
+          && (furnitureDTO.getPurchasePrice() == 0 && purchasePrice == -1
               || (withdrawalDateFromCustomer == null
                   && furnitureDTO.getWithdrawalDateFromCustomer() == null))) {
         throw new BusinessException("Veuillez remplir les champs.");
       }
       if (condition == FurnitureCondition.vendu
-          && ((withdrawalDateToCustomer != null && deliveryDate != null)
-              || ((withdrawalDateToCustomer == null && deliveryDate == null)
-                  || (furnitureDTO.getWithdrawalDateToCustomer() == null
-                      && furnitureDTO.getDeliveryDate() == null))
-                  && (buyerEmail == null
-                      && (furnitureDTO.getBuyer() == null && furnitureDTO.getBuyer() == null)))) {
+          && (withdrawalDateToCustomer != null && deliveryDate != null
+              || (withdrawalDateToCustomer == null && deliveryDate == null
+                  || furnitureDTO.getWithdrawalDateToCustomer() == null
+                      && furnitureDTO.getDeliveryDate() == null)
+                  && (buyerEmail == null && furnitureDTO.getBuyer() == null
+                      && furnitureDTO.getBuyer() == null))) {
         throw new BusinessException("Veuillez remplir les champs.");
       }
-      if (condition == FurnitureCondition.en_vente
-          && (sellingPrice == -1 && furnitureDTO.getSellingPrice() == 0)) {
+      if (condition == FurnitureCondition.en_vente && sellingPrice == -1
+          && furnitureDTO.getSellingPrice() == 0) {
         throw new BusinessException("Veuillez remplir les champs.");
       }
     }

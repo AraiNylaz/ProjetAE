@@ -15,7 +15,6 @@ import be.vinci.pae.services.address.DAOAddress;
 import be.vinci.pae.services.furniture.DAOFurniture;
 import be.vinci.pae.services.picture.DAOPicture;
 import be.vinci.pae.services.visitrequest.DAOVisitRequest;
-import be.vinci.pae.utils.Upload;
 import be.vinci.pae.utils.UploadInterface;
 import be.vinci.pae.utils.ValueLink.FurnitureCondition;
 import be.vinci.pae.utils.ValueLink.VisitRequestStatus;
